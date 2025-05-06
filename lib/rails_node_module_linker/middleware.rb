@@ -1,3 +1,5 @@
+require "rails_node_module_linker/config"
+
 class RailsNodeModuleLinker::Middleware
   def initialize(app)
     @app = app
@@ -26,7 +28,7 @@ class RailsNodeModuleLinker::Middleware
         File.write(config_file_path, config.to_yaml)
 
         # * Call the rake task to create the symlink
-        system("bin/rails assets:link_node_module_packages")
+        system("bin/rails rails_node_module_linker:link")
 
         return redirect_to_newly_linked_module(path)
       end

@@ -22,7 +22,7 @@ gem install rails_node_module_linker
 # config/initializers/rails_node_module_linker.rb
 
 Rails.application.config.to_prepare do
-  RailsNodeModuleLinker.config.config_file_path = Rails.root.join("config/custom_node_modules.yml")
+  RailsNodeModuleLinker.config.config_file_path = Rails.root.join("config/symlinked_node_modules.yml")
   RailsNodeModuleLinker.config.use_emojis = true
 end
 ```
