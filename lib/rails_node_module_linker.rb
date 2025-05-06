@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "rails_node_module_linker/version"
-require_relative "rails_node_module_linker/railtie"
 require_relative "rails_node_module_linker/config"
 require_relative "rails_node_module_linker/middleware"
+require_relative "rails_node_module_linker/railtie"
 
 module RailsNodeModuleLinker
   # * Configuration accessor for users to access and modify settings
