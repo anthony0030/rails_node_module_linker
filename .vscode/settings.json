@@ -1,10 +1,8 @@
 {
-  "cSpell.enabledLanguageIds": [
-    "COBOL",
-    "ACUCOBOL"
-  ],
   "cSpell.words": [
+    "mattr",
     "popen",
-    "Veaudry"
+    "Veaudry",
+    "yardoc"
   ]
 }
