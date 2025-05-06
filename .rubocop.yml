@@ -31,9 +31,9 @@ Metrics/MethodLength:
 
 
 # ################################################ * Metrics * ################################################# #
-Style/Documentation:
-  Enabled: false
-
 Style/ClassAndModuleChildren:
   Enabled: true
   EnforcedStyle: 'compact'
+
+Style/Documentation:
+  Enabled: false
