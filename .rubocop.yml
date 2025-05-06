@@ -7,10 +7,14 @@ AllCops:
   SuggestExtensions: true
   NewCops: 'enable'
 
+
+# ################################################ * Layout * ################################################# #
 Layout/LineLength:
   Enabled: true
   Max: 250
 
+
+# ################################################ * Metrics * ################################################# #
 Metrics/AbcSize:
   Enabled: false # * Keeping these off due to complexity of refactoring existing code
 
@@ -25,6 +29,8 @@ Metrics/MethodLength:
   CountAsOne: ["array", "heredoc", "method_call"]
   Max: 50
 
+
+# ################################################ * Metrics * ################################################# #
 Style/Documentation:
   Enabled: false
 
