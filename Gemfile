@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in rails_node_module_linker.gemspec
+# * Specify your gem's dependencies in rails_node_module_linker.gemspec
 gemspec
 
 gem 'irb'
