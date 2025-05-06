@@ -1,4 +1,4 @@
-class MissingNodeModuleHandler
+class RailsNodeModuleLinker::Middleware
   def initialize(app)
     @app = app
   end

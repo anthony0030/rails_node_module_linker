@@ -19,6 +19,6 @@ module RailsNodeModuleLinker
     end
 
     # Add middleware
-    config.middleware.use RailsNodeModuleLinker::MissingNodeModuleHandler
+    config.middleware.use RailsNodeModuleLinker::Middleware
   end
 end
