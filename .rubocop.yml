@@ -11,6 +11,9 @@ Layout/LineLength:
   Enabled: true
   Max: 250
 
+Metrics/AbcSize:
+  Enabled: false # * Keeping these off due to complexity of refactoring existing code
+
 Metrics/BlockLength:
   Enabled: true
   CountAsOne: ["array", "heredoc", "method_call"]

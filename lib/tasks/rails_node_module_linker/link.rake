@@ -79,5 +79,6 @@ namespace :rails_node_module_linker do
     end
   end
 
+  desc 'Link node module packages before asset precompilation'
   task precompile: :link_node_module_packages
 end
