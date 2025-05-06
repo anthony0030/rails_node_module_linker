@@ -6,6 +6,7 @@ class MissingNodeModuleHandler
   def call(env)
     path = env["PATH_INFO"]
     query = Rack::Utils.parse_query(env["QUERY_STRING"])
+    config_file_path = RailsNodeModuleLinker.config.config_file_path
 
     if path.start_with?("/node_modules/")
       status, _headers, _body = @app.call(env)
@@ -13,16 +14,16 @@ class MissingNodeModuleHandler
         package = extract_package(path)
 
         # * Ensure the config directory exists
-        FileUtils.mkdir_p(@config_file_path.dirname)
+        FileUtils.mkdir_p(config_file_path.dirname)
 
         # * Load existing config or initialize a new one
-        config = File.exist?(@config_file_path) ? YAML.load_file(@config_file_path) : { "packages" => [] }
+        config = File.exist?(config_file_path) ? YAML.load_file(config_file_path) : { "packages" => [] }
 
         # * Add the package if not already listed
         config["packages"] = (config["packages"] | [package]).sort
 
         # * Save the updated config
-        File.write(@config_file_path, config.to_yaml)
+        File.write(config_file_path, config.to_yaml)
 
         # * Call the rake task to create the symlink
         system("bin/rails assets:link_node_module_packages")

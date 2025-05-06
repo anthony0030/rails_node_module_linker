@@ -1,5 +1,6 @@
 require 'yaml'
 require 'fileutils'
+require "rails_node_module_linker/config"
 
 def log_with_emoji(message)
   if RailsNodeModuleLinker.config.use_emojis
@@ -13,15 +14,17 @@ namespace :rails_node_module_linker do
   desc "Symlink full packages from node_modules to public/node_modules"
   task :link => :environment do
 
-    # * Ensure the config file exists with a default structure
-    unless File.exist?(@config_file_path)
-      log_with_emoji("🆕 Created missing config file at #{@config_file_path}")
+    config_file_path = RailsNodeModuleLinker.config.config_file_path
 
-      FileUtils.mkdir_p(@config_file_path.dirname)
-      File.write(@config_file_path, { "packages" => [] }.to_yaml)
+    # * Ensure the config file exists with a default structure
+    unless File.exist?(config_file_path)
+      log_with_emoji("🆕 Created missing config file at #{config_file_path}")
+
+      FileUtils.mkdir_p(config_file_path.dirname)
+      File.write(config_file_path, { "packages" => [] }.to_yaml)
     end
 
-    config = YAML.load_file(@config_file_path)
+    config = YAML.load_file(config_file_path)
     node_modules_to_link = config["packages"] || []
 
     if node_modules_to_link.empty?
