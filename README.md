@@ -27,6 +27,18 @@ Rails.application.config.to_prepare do
 end
 ```
 
+```yaml
+# config/symlinked_node_modules.yml
+
+---
+packages:
+- "@melloware/coloris"
+- bootstrap
+- flag-icons
+- intl-tel-input
+- mapbox-gl
+```
+
 ### Rake Tasks
 
 #### Link Node Modules
