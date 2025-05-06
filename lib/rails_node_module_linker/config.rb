@@ -9,6 +9,7 @@ module RailsNodeModuleLinker
 
       # TODO make desitination folder customizable
       # TODO make source folder customizable
+      # TODO make middleware enablement configurable
     end
   end
 end
