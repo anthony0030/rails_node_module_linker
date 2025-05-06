@@ -1,4 +1,6 @@
-require "rails_node_module_linker/config"
+# frozen_string_literal: true
+
+require 'rails_node_module_linker/config'
 
 class RailsNodeModuleLinker::Middleware
   def initialize(app)
@@ -6,11 +8,11 @@ class RailsNodeModuleLinker::Middleware
   end
 
   def call(env)
-    path = env["PATH_INFO"]
-    query = Rack::Utils.parse_query(env["QUERY_STRING"])
+    path = env['PATH_INFO']
+    Rack::Utils.parse_query(env['QUERY_STRING'])
     config_file_path = RailsNodeModuleLinker.config.config_file_path
 
-    if path.start_with?("/node_modules/")
+    if path.start_with?('/node_modules/')
       status, _headers, _body = @app.call(env)
       if status == 404
         package = extract_package(path)
@@ -19,16 +21,16 @@ class RailsNodeModuleLinker::Middleware
         FileUtils.mkdir_p(config_file_path.dirname)
 
         # * Load existing config or initialize a new one
-        config = File.exist?(config_file_path) ? YAML.load_file(config_file_path) : { "packages" => [] }
+        config = File.exist?(config_file_path) ? YAML.load_file(config_file_path) : { 'packages' => [] }
 
         # * Add the package if not already listed
-        config["packages"] = (config["packages"] | [package]).sort
+        config['packages'] = (config['packages'] | [package]).sort
 
         # * Save the updated config
         File.write(config_file_path, config.to_yaml)
 
         # * Call the rake task to create the symlink
-        system("bin/rails rails_node_module_linker:link")
+        system('bin/rails rails_node_module_linker:link')
 
         return redirect_to_newly_linked_module(path)
       end
@@ -38,23 +40,24 @@ class RailsNodeModuleLinker::Middleware
   end
 
   private
-    def extract_package(path)
-      segments = path.split("/")
 
-      return nil unless segments[1] == "node_modules"
+  def extract_package(path)
+    segments = path.split('/')
 
-      if segments[2].start_with?("@")
-        "#{segments[2]}/#{segments[3]}"
-      else
-        segments[2]
-      end
+    return nil unless segments[1] == 'node_modules'
+
+    if segments[2].start_with?('@')
+      "#{segments[2]}/#{segments[3]}"
+    else
+      segments[2]
     end
+  end
 
-    def redirect_to_newly_linked_module(path)
-      [
-        302,
-        { "Location" => path },
-        []
-      ]
-    end
+  def redirect_to_newly_linked_module(path)
+    [
+      302,
+      { 'Location' => path },
+      []
+    ]
+  end
 end
