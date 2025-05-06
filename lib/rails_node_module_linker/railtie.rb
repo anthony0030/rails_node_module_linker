@@ -13,7 +13,12 @@ module RailsNodeModuleLinker
     end
 
     initializer "rails_node_module_linker.insert_middleware" do |app|
-      app.middleware.insert_before ActionDispatch::Static, RailsNodeModuleLinker::Middleware
+      if Rails.env.development?
+        app.middleware.insert_before ActionDispatch::Static, RailsNodeModuleLinker::Middleware
+        Rails.logger.info "[rails_node_module_linker] Middleware inserted"
+      else
+        Rails.logger.info "[rails_node_module_linker] Middleware skipped"
+      end
     end
   end
 end
