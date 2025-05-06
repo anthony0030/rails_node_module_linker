@@ -1,14 +1,30 @@
+require:
+  - rubocop-rake # * Rake-specific analysis. (Official)
+  - rubocop-rspec # * RSpec-specific analysis. (Official)
+
 AllCops:
   TargetRubyVersion: 3.1
+  SuggestExtensions: true
+  NewCops: 'enable'
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
+Layout/LineLength:
+  Enabled: true
+  Max: 250
 
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
+Metrics/BlockLength:
+  Enabled: true
+  CountAsOne: ["array", "heredoc", "method_call"]
+  AllowedMethods: ["included"]
+  Max: 50
+
+Metrics/MethodLength:
+  Enabled: true
+  CountAsOne: ["array", "heredoc", "method_call"]
+  Max: 50
 
 Style/Documentation:
   Enabled: false
 
-Style/ClassAndModuleChildren
-  EnforcedStyle: compact
+Style/ClassAndModuleChildren:
+  Enabled: true
+  EnforcedStyle: 'compact'
