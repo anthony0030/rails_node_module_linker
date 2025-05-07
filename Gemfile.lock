@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rails_node_module_linker (0.1.0)
+    rails_node_module_linker (0.1.1)
 
 GEM
   remote: https://rubygems.org/

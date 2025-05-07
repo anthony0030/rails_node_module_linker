@@ -80,5 +80,5 @@ namespace :rails_node_module_linker do
   end
 
   desc 'Link node module packages before asset precompilation'
-  task precompile: :link_node_module_packages
+  task precompile_hook: :link
 end
