@@ -9,7 +9,7 @@ class RailsNodeModuleLinker::Config
     @use_emojis = true
 
     # TODO: make desitination folder customizable
-    # TODO make source folder customizable
-    # TODO make middleware enablement configurable
+    # TODO: make source folder customizable
+    # TODO: make middleware enablement configurable
   end
 end
