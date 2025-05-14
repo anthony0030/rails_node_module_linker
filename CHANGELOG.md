@@ -3,6 +3,8 @@
 ## [0.2.0] - 2025-05-17
 
 - Adds ability to change the `destination_path`
+- renames config_file_path to symlinked_node_modules_config
+- BREAKING removes need to add Rails.root.join in the config
 
 ## [0.1.1] - 2025-05-07
 

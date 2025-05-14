@@ -10,8 +10,8 @@ class RailsNodeModuleLinker::Middleware
   def call(env)
     path = env['PATH_INFO']
     Rack::Utils.parse_query(env['QUERY_STRING'])
-    config_file_path = Rails.root.join(
-      RailsNodeModuleLinker.config.config_file_path
+    symlinked_node_modules_config = Rails.root.join(
+      RailsNodeModuleLinker.config.symlinked_node_modules_config
     )
 
     if path.start_with?('/node_modules/')
@@ -20,16 +20,16 @@ class RailsNodeModuleLinker::Middleware
         package = extract_package(path)
 
         # * Ensure the config directory exists
-        FileUtils.mkdir_p(config_file_path.dirname)
+        FileUtils.mkdir_p(symlinked_node_modules_config.dirname)
 
         # * Load existing config or initialize a new one
-        config = File.exist?(config_file_path) ? YAML.load_file(config_file_path) : { 'packages' => [] }
+        config = File.exist?(symlinked_node_modules_config) ? YAML.load_file(symlinked_node_modules_config) : { 'packages' => [] }
 
         # * Add the package if not already listed
         config['packages'] = (config['packages'] | [package]).sort
 
         # * Save the updated config
-        File.write(config_file_path, config.to_yaml)
+        File.write(symlinked_node_modules_config, config.to_yaml)
 
         # * Call the rake task to create the symlink
         system('bin/rails rails_node_module_linker:link')

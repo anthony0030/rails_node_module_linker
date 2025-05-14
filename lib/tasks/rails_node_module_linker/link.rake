@@ -16,19 +16,19 @@ end
 namespace :rails_node_module_linker do
   desc "Symlink full packages from node_modules to #{RailsNodeModuleLinker.config.destination_path}"
   task link: :environment do
-    config_file_path = Rails.root.join(
-      RailsNodeModuleLinker.config.config_file_path
+    symlinked_node_modules_config = Rails.root.join(
+      RailsNodeModuleLinker.config.symlinked_node_modules_config
     )
 
     # * Ensure the config file exists with a default structure
-    unless File.exist?(config_file_path)
-      log_with_emoji("🆕 Created missing config file at #{config_file_path}")
+    unless File.exist?(symlinked_node_modules_config)
+      log_with_emoji("🆕 Created missing config file at #{symlinked_node_modules_config}")
 
-      FileUtils.mkdir_p(config_file_path.dirname)
-      File.write(config_file_path, { 'packages' => [] }.to_yaml)
+      FileUtils.mkdir_p(symlinked_node_modules_config.dirname)
+      File.write(symlinked_node_modules_config, { 'packages' => [] }.to_yaml)
     end
 
-    config = YAML.load_file(config_file_path)
+    config = YAML.load_file(symlinked_node_modules_config)
     node_modules_to_link = config['packages'] || []
 
     log_with_emoji('📭 No node modules configured to link.') if node_modules_to_link.empty?
