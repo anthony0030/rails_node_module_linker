@@ -22,8 +22,9 @@ gem install rails_node_module_linker
 # config/initializers/rails_node_module_linker.rb
 
 Rails.application.config.to_prepare do
-  RailsNodeModuleLinker.config.config_file_path = Rails.root.join("config/symlinked_node_modules.yml")
+  RailsNodeModuleLinker.config.config_file_path = 'config/symlinked_node_modules.yml' # TODO: rename to symlinked_node_modules_config
   RailsNodeModuleLinker.config.use_emojis = true
+  RailsNodeModuleLinker.config.destination_path = 'public/node_modules'
 end
 ```
 

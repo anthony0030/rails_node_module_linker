@@ -10,7 +10,9 @@ class RailsNodeModuleLinker::Middleware
   def call(env)
     path = env['PATH_INFO']
     Rack::Utils.parse_query(env['QUERY_STRING'])
-    config_file_path = RailsNodeModuleLinker.config.config_file_path
+    config_file_path = Rails.root.join(
+      RailsNodeModuleLinker.config.config_file_path
+    )
 
     if path.start_with?('/node_modules/')
       status, _headers, _body = @app.call(env)

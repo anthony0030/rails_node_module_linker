@@ -14,9 +14,11 @@ def log_with_emoji(message)
 end
 
 namespace :rails_node_module_linker do
-  desc 'Symlink full packages from node_modules to public/node_modules'
+  desc "Symlink full packages from node_modules to #{RailsNodeModuleLinker.config.destination_path}"
   task link: :environment do
-    config_file_path = RailsNodeModuleLinker.config.config_file_path
+    config_file_path = Rails.root.join(
+      RailsNodeModuleLinker.config.config_file_path
+    )
 
     # * Ensure the config file exists with a default structure
     unless File.exist?(config_file_path)
@@ -31,15 +33,15 @@ namespace :rails_node_module_linker do
 
     log_with_emoji('📭 No node modules configured to link.') if node_modules_to_link.empty?
 
-    public_node_modules = Rails.root.join('public/node_modules')
-    FileUtils.mkdir_p(public_node_modules)
+    node_modules_destination_path = Rails.root.join(RailsNodeModuleLinker.config.destination_path)
+    FileUtils.mkdir_p(node_modules_destination_path)
 
     # * Clean up outdated symlinks
-    existing_symlinks = Dir.glob(public_node_modules.join('**/*'), File::FNM_DOTMATCH).select do |path|
+    existing_symlinks = Dir.glob(node_modules_destination_path.join('**/*'), File::FNM_DOTMATCH).select do |path|
       File.symlink?(path)
     end
     existing_symlinks.each do |symlink_path|
-      relative_path = Pathname.new(symlink_path).relative_path_from(public_node_modules).to_s
+      relative_path = Pathname.new(symlink_path).relative_path_from(node_modules_destination_path).to_s
       next if node_modules_to_link.include?(relative_path)
 
       log_with_emoji("🧹 Removing stale symlink: #{symlink_path}")
@@ -50,7 +52,7 @@ namespace :rails_node_module_linker do
     # * Add or update symlinks from config
     node_modules_to_link.each do |package|
       source = Rails.root.join('node_modules', package)
-      destination = public_node_modules.join(package)
+      destination = node_modules_destination_path.join(package)
 
       unless source.exist?
         log_with_emoji("🚫 Source does not exist: #{source} (skipping)")
