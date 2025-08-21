@@ -11,3 +11,6 @@
 .rspec_status
 
 *.gem
+
+# System Files
+.DS_Store
