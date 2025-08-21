@@ -24,6 +24,7 @@ gem install rails_node_module_linker
 Rails.application.config.to_prepare do
   RailsNodeModuleLinker.config.symlinked_node_modules_config = 'config/symlinked_node_modules.yml'
   RailsNodeModuleLinker.config.destination_path = 'public/node_modules'
+  RailsNodeModuleLinker.config.force_link = false
   RailsNodeModuleLinker.config.use_emojis = true
 end
 ```
@@ -58,7 +59,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub [here](https://github.com/anthony0030/rails_node_module_linker). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/anthony0030/rails_node_module_linker/blob/master/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on [GitHub](https://github.com/anthony0030/rails_node_module_linker). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/anthony0030/rails_node_module_linker/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 

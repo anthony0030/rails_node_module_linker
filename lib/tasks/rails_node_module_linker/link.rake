@@ -53,8 +53,9 @@ namespace :rails_node_module_linker do
     node_modules_to_link.each do |package|
       source = Rails.root.join('node_modules', package)
       destination = node_modules_destination_path.join(package)
+      force_link = RailsNodeModuleLinker.config.force_link
 
-      unless source.exist?
+      if !source.exist? && !force_link && !destination.symlink?
         log_with_emoji("🚫 Source does not exist: #{source} (skipping)")
 
         next
@@ -64,10 +65,11 @@ namespace :rails_node_module_linker do
         if File.exist?(destination.readlink)
           log_with_emoji("✅ Already linked: #{destination}")
           next
-        else
-          log_with_emoji("⚠ Broken symlink detected: #{destination} (removing)")
+        elsif !force_link
+          log_with_emoji("⛓️‍💥 Broken symlink detected: #{destination} (removing)")
 
           FileUtils.rm(destination)
+          next
         end
       elsif destination.exist?
         log_with_emoji("❌ Destination exists but is not a symlink: #{destination} (skipping)")
